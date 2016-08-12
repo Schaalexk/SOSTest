@@ -1,4 +1,5 @@
 var Cylon = require('cylon');
+var LEDController = require('ledctl');
 
 Cylon.robot({
   connections: {
