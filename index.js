@@ -1,18 +1,20 @@
 var alexa = require('alexa-app');
-var app = new alexa.app();
+var app = new alexa.app('alexa-morse-code-to-cylon');
 var getUrl = require('request');
+
 /**
  * LaunchRequest.
  */
-app.launch(function(request,response) {
-	response.say('Resistance is futile');
-	response.card("Hey there fancy pants!","This is an example card");
-});
 
+app.launch(function(request,response) {
+	response.say('Speak and I will translate to morse code');
+	response.card("Speak and I will translate to morse code","Morse Card");
+});
 
 /**
  * IntentRequest.
  */
+
 app.intent('OnIntent',
   {
     'utterances':[ 'turn the light on' ]
@@ -59,14 +61,6 @@ app.intent('OffIntent',
 	return false;
   }
 );
-
-app.intent('EndIntent',
-	function (request, response) {
-		response.say('stopping, by your command');
-		response.shouldEndSession(true);
-		response.send();
-		return false;
-	});
 
 /**
  * Error handler for any thrown errors.
