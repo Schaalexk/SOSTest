@@ -38,29 +38,6 @@ app.intent('OnIntent',
 	  return false;
   }
 );
-app.intent('OffIntent',
-  {
-    'utterances':[ 'turn the light off' ]
-  },
-  function(request,response) {
-	  console.log('Off Intent');
-	  getUrl("https://e1c0e79f.ngrok.io/api/robots/omnius/commands/off", function(err, Response, body){
-		  console.log(Response);
-	 	if(!err){
-			console.log(body, Response);
-			response.say('turning the light off, by your command');
-			response.shouldEndSession(true);
-			response.send();
-		} else{
-			console.log(body, Response);
-			response.say('something went wrong');
-			response.shouldEndSession(true);
-			response.send();
-		}
-	  });
-	return false;
-  }
-);
 
 /**
  * Error handler for any thrown errors.
