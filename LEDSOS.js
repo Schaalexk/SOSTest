@@ -1,9 +1,9 @@
 var Cylon = require('cylon');
-var LEDController = require('ledctl');
+var morse = require('morse');
 
 Cylon.robot({
   connections: {
-    arduino: { adaptor: 'firmata', port: 'COM3' }
+    arduino: { adaptor: 'firmata', port: '/dev/ttyACM0' }
   },
 
   devices: {
@@ -11,7 +11,45 @@ Cylon.robot({
   },
 
   work: function(my) {
-setTimeout(function() { letterS(); }, 1000);
+
+  var encoded = morse.encode('this is morse code'),
+      count = 0,
+      lastDot = false;
+
+  console.log(encoded);
+
+  for (var i = 0; i < encoded.length; i++){
+    console.log(encoded[i]);
+    if(encoded[i] === '.'){
+      dot();
+    } else if (encoded[i] === '-'){
+      dash();
+    } else {
+      space();
+    }
+  }
+
+  function dot() {
+    count += 0.75;
+    setTimeout(function() { after((0.0).second(), my.led.toggle); }, (count * 750));
+    setTimeout(function() { after((0.25).second(), my.led.toggle); }, (count * 750));
+    lastDot = true;
+  }
+
+  function dash() {
+    count += 0.75;
+    setTimeout(function() { after((0.0).second(), my.led.toggle); }, (count * 750));
+    setTimeout(function() { after((0.75).second(), my.led.toggle); }, (count * 750));
+    count += 0.75;
+    lastDot = false;
+  }
+
+  function space() {
+    count += 0.75;
+  }
+
+
+/* setTimeout(function() { letterS(); }, 1000);
 setTimeout(function() { letterO(); }, 4000);
 setTimeout(function() { letterS(); }, 8500);
 
@@ -32,7 +70,7 @@ setTimeout(function() { letterS(); }, 8500);
       after((3.5).second(), my.led.toggle);
       after((4.5).second(), my.led.toggle);
     }
-
+*/
   }
 
 }).start();
