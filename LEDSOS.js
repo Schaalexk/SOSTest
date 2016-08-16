@@ -12,9 +12,8 @@ Cylon.robot({
 
   work: function(my) {
 
-  var encoded = morse.encode('this is morse code'),
-      count = 0,
-      lastDot = false;
+  var encoded = morse.encode('sos'),
+      count = 0;
 
   console.log(encoded);
 
@@ -33,7 +32,6 @@ Cylon.robot({
     count += 0.75;
     setTimeout(function() { after((0.0).second(), my.led.toggle); }, (count * 750));
     setTimeout(function() { after((0.25).second(), my.led.toggle); }, (count * 750));
-    lastDot = true;
   }
 
   function dash() {
@@ -41,7 +39,6 @@ Cylon.robot({
     setTimeout(function() { after((0.0).second(), my.led.toggle); }, (count * 750));
     setTimeout(function() { after((0.75).second(), my.led.toggle); }, (count * 750));
     count += 0.75;
-    lastDot = false;
   }
 
   function space() {
