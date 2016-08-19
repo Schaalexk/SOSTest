@@ -1,6 +1,8 @@
 var alexa = require('alexa-app');
 var app = new alexa.app('alexa-morse-code-to-cylon');
 var getUrl = require('request');
+var morseTranslate = require('./LEDSOS.js');
+var code = 'a';
 
 /**
  * LaunchRequest.
@@ -15,29 +17,18 @@ app.launch(function(request,response) {
  * IntentRequest.
  */
 
-app.intent('OnIntent',
+app.intent('onIntent',
   {
-    'utterances':[ 'turn the light on' ]
+		'slots': { 'spokenWord':'WORDS' },
+    'utterances':[ '{spokenWord}' ]
   },
   function(request,response) {
-	  console.log('On intent');
-	getUrl('https://e1c0e79f.ngrok.io/api/robots/omnius/commands/on', function(err, Response, body){
-		console.log(Response);
-		if(!err){
-			console.log(body, Response);
-			response.say('turning the light on, by your command');
-			response.shouldEndSession(true);
-			response.send();
-		}else{
-			console.log(body, Response);
-			response.say('I encountered a problem');
-			response.shouldEndSession(true);
-			response.send();
-		}
+		code = request.slot('spokenWord');
+		morseTranslate.getMorse(code);
+		response.shouldEndSession(true);
+		response.send();
 	});
-	  return false;
-  }
-);
+
 
 /**
  * Error handler for any thrown errors.

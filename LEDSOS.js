@@ -1,5 +1,8 @@
 var Cylon = require('cylon');
 var morse = require('morse');
+var express = require('express');
+
+exports.getMorse = function(variable) {
 
 Cylon.robot({
   connections: {
@@ -12,7 +15,7 @@ Cylon.robot({
 
   work: function(my) {
 
-  var encoded = morse.encode('sos'),
+  var encoded = morse.encode(variable),
       count = 0;
 
   console.log(encoded);
@@ -48,3 +51,5 @@ Cylon.robot({
   }
 
 }).start();
+
+}
